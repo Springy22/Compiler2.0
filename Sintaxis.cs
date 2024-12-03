@@ -7,6 +7,7 @@ namespace Compilador
 {
     public class Sintaxis : Lexico
     {
+        public String beforeToken = "";
         public Sintaxis()
         {
             nextToken();
@@ -19,6 +20,7 @@ namespace Compilador
         {
             if (Contenido == espera)
             {
+                beforeToken = espera;
                 nextToken();
             }
             else
@@ -30,6 +32,7 @@ namespace Compilador
         {
             if (Clasificacion == espera)
             {
+                beforeToken = Contenido;   
                 nextToken();
             }
             else

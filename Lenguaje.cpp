@@ -6,41 +6,56 @@ using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-namespace Cplusplus
+namespace lenguaje
 {
     public class Lenguaje : Sintaxis
     {
         public Lenguaje()
         {
         }
+
         public Lenguaje(string nombre) : base(nombre)
         {
         }
+
         public void Programa ()
         {
-              Librerias();
-              Main();
+            A();
+              match("b");
+            C();
         }
-        private void Librerias ()
+
+        private void A ()
         {
-              match("#");
-              match("include");
-              match("<");
-              match(Tipos.Identificador);
-              match(">");
-              if(
-              }
+            C();
+            if(Clasificacion == Tipos.Numero)
+           {
+                match(Tipos.Numero);
+              match("b");
+            C();
+            D();
+            }
+            D();
         }
-        private void Main ()
+
+        private void C ()
         {
-              match("void");
-              match("main");
-              match("(");
-              match(")");
-              BloqueInstrucciones();
+            D();
+            if(Contenido = "a")
+            {
+                match("a");
+            }
+            else if (getContenido() == "b"){
+                match("b");
+            }
+            else{
+                D();
+            }
         }
-        private void BloqueInstrucciones ()
+
+        private void D ()
         {
         }
+
     }
 }

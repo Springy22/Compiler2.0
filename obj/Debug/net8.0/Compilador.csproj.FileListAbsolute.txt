@@ -12,3 +12,4 @@ C:\Users\puppy\OneDrive\Documentos\ITQ\5to\Lenguajes y automatas II\Compiler2.0\
 C:\Users\puppy\OneDrive\Documentos\ITQ\5to\Lenguajes y automatas II\Compiler2.0\obj\Debug\net8.0\Compilador.pdb
 C:\Users\puppy\OneDrive\Documentos\ITQ\5to\Lenguajes y automatas II\Compiler2.0\obj\Debug\net8.0\Compilador.genruntimeconfig.cache
 C:\Users\puppy\OneDrive\Documentos\ITQ\5to\Lenguajes y automatas II\Compiler2.0\obj\Debug\net8.0\ref\Compilador.dll
+C:\Users\puppy\OneDrive\Documentos\ITQ\5to\Lenguajes y automatas II\Compiler2.0\obj\Debug\net8.0\Compilador.sourcelink.json

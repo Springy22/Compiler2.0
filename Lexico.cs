@@ -17,8 +17,8 @@ namespace Compilador
         const int E = -2;
         int[,] TRAND =
         {
-        // WS L - > \ ; ? | ( ) La
-            {0,1,2,10,4,10,10,10,10,10,10},
+        //  WS  L  -   >  \   ;   ?   |  (    )  La
+            {0, 1, 2, 10, 4, 10, 10, 7, 10, 10, 10},
             {F,1,F,F,F,F,F,F,F,F,F},
             {F,F,F,3,F,F,F,F,F,F,F},
             {F,F,F,F,F,F,F,F,F,F,F},

@@ -1,5 +1,5 @@
-namespace : Cplusplus;
-Programa  -> Librerias Main\;
-Librerias -> #include <Identificador> \(\)\;
-Main      -> void main() BloqueInstrucciones\;
-BloqueInstrucciones -> \;
+namespace:lenguaje;
+Programa -> A b C \;
+A -> C \( Numero b C D \)\? D \;
+C -> D \(  a | b | D \)\;
+D -> \;
