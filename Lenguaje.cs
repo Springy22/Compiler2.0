@@ -20,6 +20,8 @@ namespace Compilador
         private List<string> listaEpsilons = new List<string>();
         private List<string> lenguajeEpsilon = new List<string>();
         private bool banderaEpsilon = false;
+        private String space="  ";
+        private int saltosLinea = 6;
 
         public Lenguaje()
         {
@@ -29,26 +31,27 @@ namespace Compilador
         }
         private void esqueleto(string nspace)
         {
-            lenguajecs.WriteLine("using System;");
-            lenguajecs.WriteLine("using System.Collections.Generic;");
-            lenguajecs.WriteLine("using System.Linq;");
-            lenguajecs.WriteLine("using System.Net.Http.Headers;");
-            lenguajecs.WriteLine("using System.Reflection.Metadata.Ecma335;");
-            lenguajecs.WriteLine("using System.Runtime.InteropServices;");
-            lenguajecs.WriteLine("using System.Threading.Tasks;");
-            lenguajecs.WriteLine("\nnamespace " + nspace);
-            lenguajecs.WriteLine("{");
-            lenguajecs.WriteLine("    public class Lenguaje : Sintaxis");
-            lenguajecs.WriteLine("    {");
-            lenguajecs.WriteLine("        public Lenguaje()");
-            lenguajecs.WriteLine("        {");
-            lenguajecs.WriteLine("        }");
-            lenguajecs.WriteLine("");
-            lenguajecs.WriteLine("        public Lenguaje(string nombre) : base(nombre)");
-            lenguajecs.WriteLine("        {");
-            lenguajecs.WriteLine("        }");
-            lenguajecs.WriteLine("");
-            //lenguajecs.WriteLine("        public void ");
+            ImprimePantalla(0,"using System;");
+            //lenguajecs.WriteLine("using System;");
+            ImprimePantalla(0,"using System.Collections.Generic;");
+            ImprimePantalla(0,"using System.Linq;");
+            ImprimePantalla(0,"using System.Net.Http.Headers;");
+            ImprimePantalla(0,"using System.Reflection.Metadata.Ecma335;");
+            ImprimePantalla(0,"using System.Runtime.InteropServices;");
+            ImprimePantalla(0,"using System.Threading.Tasks;");
+            ImprimePantalla(0,"");
+            ImprimePantalla(0,"namespace " + nspace);
+            ImprimePantalla(0,"{");
+            ImprimePantalla(2,"public class Lenguaje : Sintaxis");
+            ImprimePantalla(2,"{");
+            ImprimePantalla(4,"public Lenguaje()");
+            ImprimePantalla(4,"{");
+            ImprimePantalla(4,"}");
+            ImprimePantalla(4,"");
+            ImprimePantalla(4,"public Lenguaje(string nombre) : base(nombre)");
+            ImprimePantalla(4,"{");
+            ImprimePantalla(4,"}");
+            ImprimePantalla(4,"");
         }
         public void genera()
         {
@@ -65,8 +68,8 @@ namespace Compilador
             }
             match(";");
             producciones();
-            lenguajecs.WriteLine("    }");
-            lenguajecs.WriteLine("}");
+            ImprimePantalla(2,"}");
+            ImprimePantalla(0,"}");
         }
 
         private void producciones()
@@ -75,8 +78,8 @@ namespace Compilador
             {
                 if (Clasificacion == Tipos.SNT)
                 {
-                    lenguajecs.WriteLine("        public void " + Contenido + " ()");
-                    lenguajecs.WriteLine("        {");
+                    ImprimePantalla(4,"public void "+Contenido+"()");
+                    ImprimePantalla(4,"{");
                     publicBandera = false;
                 }
             }
@@ -84,21 +87,22 @@ namespace Compilador
             {
                 if (Clasificacion == Tipos.SNT)
                 {
-                    lenguajecs.WriteLine("        private void " + Contenido + " ()");
-                    lenguajecs.WriteLine("        {");
+                    ImprimePantalla(4,"private void "+Contenido+"()");
+                    ImprimePantalla(4,"{");
                 }
             }
 
             match(Tipos.SNT);
             match(Tipos.Flecha);
             conjuntoTokens();
+            saltosLinea=6;
             match(Tipos.FinProduccion);
             if (banderaEpsilon)
             {
                 Console.WriteLine("Hay un epsilon");
             }
-            lenguajecs.WriteLine("        }");
-            lenguajecs.WriteLine("");
+            ImprimePantalla(4,"}");
+            ImprimePantalla(0,"");
             banderaEpsilon = false;
             if (Clasificacion == Tipos.SNT)
             {
@@ -110,14 +114,13 @@ namespace Compilador
         {
             if (Clasificacion == Tipos.SNT)
             {
-                lenguajecs.WriteLine("            " + Contenido + "();");
+                ImprimePantalla(saltosLinea,Contenido+"();");
                 match(Tipos.SNT);
             }
             else if (Clasificacion == Tipos.ST)
             {
                 if (Contenido == "?")
                 {
-
                     //Console.WriteLine(beforeToken);
                     match(Tipos.ST);
                     banderaEpsilon = true;
@@ -128,13 +131,14 @@ namespace Compilador
                 }
                 else
                 {
-                    lenguajecs.WriteLine("              match(\"" + Contenido + "\");");
+                    ImprimePantalla(saltosLinea,"match(\""+Contenido+"\");");
+                    Console.WriteLine(Contenido);
                     match(Tipos.ST);
                 }
             }
             else if (Clasificacion == Tipos.Tipo)
             {
-                lenguajecs.WriteLine("              match(Tipos." + Contenido + ");");
+                ImprimePantalla(6,"match(Tipos."+Contenido+");");
                 match(Tipos.Tipo);
             }
             else if (Clasificacion == Tipos.Or)
@@ -157,61 +161,63 @@ namespace Compilador
                         // Si es el primer caso después de OR, genera un else if
                         if (!primerCaso)
                         {
-                            lenguajecs.Write("            else if (getContenido() == \"");
+                            ImprimePantalla(6,"else if (getContenido() == \"");
                         }
                         else
                         {
                             // Si es el primer caso de la regla (antes de OR), genera un if
-                            lenguajecs.Write("            if (getContenido() == \"");
+                            ImprimePantalla(saltosLinea,"if (getContenido() == \"");
                             primerCaso = false; // Cambia la bandera para siguientes tokens
                         }
                         // Escribe el contenido del token actual
-                        lenguajecs.Write(Contenido + "\")");
-                        lenguajecs.WriteLine("{");
+                        ImprimePantalla(4, Contenido + "\")");
+                        ImprimePantalla(4, "{");
                         // Dependiendo del tipo de token, genera la acción asociada
                         if (Clasificacion == Tipos.ST)
                         {
-                            lenguajecs.WriteLine("                match(\"" + Contenido + "\");");
+                            ImprimePantalla(4,"                match(\"" + Contenido + "\");");
                             match(Tipos.ST);
                         }
                         else if (Clasificacion == Tipos.SNT)
                         {
-                            lenguajecs.WriteLine("                " + Contenido + "();");
+                            ImprimePantalla(6,Contenido + "();");                           
                             match(Tipos.SNT);
                         }
-                        lenguajecs.WriteLine("            }");
+                        ImprimePantalla(6,"}");
                     }
                 }
                 // Si contiene OR, se genera un bloque `else` al final
                 if (contieneOr)
                 {
-                    lenguajecs.WriteLine("            else");
-                    lenguajecs.WriteLine("            {");
-                    lenguajecs.WriteLine("                // Acción por defecto");
-                    lenguajecs.WriteLine("            }");
+                    ImprimePantalla(6,"else");
+                    ImprimePantalla(6,"{");
+                    ImprimePantalla(6,"// Acción por defecto");
+                    ImprimePantalla(6,"}");
                 }
             }
             else if (Clasificacion == Tipos.Izquierdo)
             {
                 match(Tipos.Izquierdo);
-                lenguajecs.Write("            if(");
+                ImprimeSinEspacio(saltosLinea,"if(");
+                saltosLinea++;
+                saltosLinea++;
                 if (Clasificacion == Tipos.ST)
                 {
-                    lenguajecs.WriteLine("Contenido = \"" + Contenido + "\")");
-                    lenguajecs.WriteLine("            {");
-                    lenguajecs.WriteLine("                match(\"" + Contenido + "\");");
+                    ImprimePantalla(0,"getContenido = \"" + Contenido + "\")");
+                    ImprimePantalla(saltosLinea-2,"{");
+                    ImprimePantalla(saltosLinea,"match(\"" + Contenido + "\");");
                     match(Tipos.ST);
                 }
                 else if (Clasificacion == Tipos.Tipo)
                 {
-                    lenguajecs.WriteLine("Clasificacion == Tipos." + Contenido + ")");
-                    lenguajecs.WriteLine("           {");
-                    lenguajecs.WriteLine("                match(Tipos." + Contenido + ");");
+                    ImprimePantalla(0,"getContenido = \"" + Contenido + "\")");
+                    ImprimePantalla(saltosLinea-2,"{");
+                    ImprimePantalla(saltosLinea,"match(Tipos." + Contenido + ");");
                     match(Tipos.Tipo);
                 }
                 if (Contenido == "|")
                 {
-                    lenguajecs.WriteLine("            }");
+                    ImprimePantalla(saltosLinea-2,"}");
                     bool primerCaso = true;  // Bandera para determinar si es el primer caso
                     bool contieneOr = false; // Bandera para verificar si existe un operador OR
                     // Procesa los tokens mientras no se alcance el fin de la producción
@@ -228,29 +234,29 @@ namespace Compilador
                             // Si es el primer caso después de OR, genera un else if
                             if (!primerCaso)
                             {
-                                lenguajecs.Write("            else");
+                                ImprimePantalla(saltosLinea-2,"else");
                             }
                             else
                             {
                                 // Si es el primer caso de la regla (antes de OR), genera un if
-                                lenguajecs.Write("            else if (getContenido() == \"");
+                                ImprimePantalla(saltosLinea-2,"else if (AquigetContenido() == \""+Contenido+"\")");
                                 primerCaso = false; // Cambia la bandera para siguientes tokens
-                                lenguajecs.Write(Contenido + "\")");
+                                //ImprimePantalla(6,"{");
                             }
                             // Escribe el contenido del token actual          
-                            lenguajecs.WriteLine("{");
+                            ImprimePantalla(saltosLinea-2,"{");
                             // Dependiendo del tipo de token, genera la acción asociada
                             if (Clasificacion == Tipos.ST)
                             {
-                                lenguajecs.WriteLine("                match(\"" + Contenido + "\");");
+                                ImprimePantalla(saltosLinea,"match(\"" + Contenido + "\");");
                                 match(Tipos.ST);
                             }
                             else if (Clasificacion == Tipos.SNT)
                             {
-                                lenguajecs.WriteLine("                " + Contenido + "();");
+                                ImprimePantalla(saltosLinea, Contenido + "();");
                                 match(Tipos.SNT);
                             }
-                            lenguajecs.WriteLine("            }");
+                            ImprimePantalla(saltosLinea-2,"}");
                         }
                         else{
                             match(Tipos.Derecho);
@@ -260,16 +266,31 @@ namespace Compilador
             }
             else if(Clasificacion==Tipos.Derecho){
                 match(Tipos.Derecho);
-                lenguajecs.WriteLine("            }");
+                ImprimePantalla(saltosLinea-2,"}");
+                saltosLinea--;
+                saltosLinea--;
             }
             else if(Clasificacion==Tipos.Epsilon){
                 nextToken();
             }
             if (Clasificacion != Tipos.FinProduccion)
             {
-                
                 conjuntoTokens();
             }
+        }
+
+        private void ImprimePantalla(int repeticiones, string texto){
+            for(int i = 0; i < repeticiones; i++){
+                lenguajecs.Write(space);
+            }
+            lenguajecs.WriteLine(texto);
+        }
+
+        private void ImprimeSinEspacio(int repeticiones, string texto){
+            for(int i = 0; i < repeticiones; i++){
+                lenguajecs.Write(space);
+            }
+            lenguajecs.Write(texto);
         }
     }
 }

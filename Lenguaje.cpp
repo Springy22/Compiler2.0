@@ -13,47 +13,49 @@ namespace lenguaje
         public Lenguaje()
         {
         }
-
+        
         public Lenguaje(string nombre) : base(nombre)
         {
         }
-
-        public void Programa ()
+        
+        public void Programa()
         {
             A();
-              match("b");
+            match("b");
             C();
         }
 
-        private void A ()
+        private void A()
         {
             C();
-            if(Clasificacion == Tipos.Numero)
-           {
+            if(getContenido = "Numero")
+            {
                 match(Tipos.Numero);
-              match("b");
-            C();
-            D();
+                match("b");
+                C();
+                D();
             }
             D();
         }
 
-        private void C ()
+        private void C()
         {
             D();
-            if(Contenido = "a")
+            if(getContenido = "a")
             {
                 match("a");
             }
-            else if (getContenido() == "b"){
+            else if (AquigetContenido() == "b")
+            {
                 match("b");
             }
-            else{
+            else
+            {
                 D();
             }
         }
 
-        private void D ()
+        private void D()
         {
         }
 
