@@ -132,7 +132,6 @@ namespace Compilador
                 else
                 {
                     ImprimePantalla(saltosLinea,"match(\""+Contenido+"\");");
-                    Console.WriteLine(Contenido);
                     match(Tipos.ST);
                 }
             }
